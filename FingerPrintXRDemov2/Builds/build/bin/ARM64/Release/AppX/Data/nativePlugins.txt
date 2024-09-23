@@ -1,5 +1,0 @@
-AudioPluginMicrosoftSpatializer.dll
-
-
-Microsoft.MixedReality.Input.dll
-openxr_loader.dll
