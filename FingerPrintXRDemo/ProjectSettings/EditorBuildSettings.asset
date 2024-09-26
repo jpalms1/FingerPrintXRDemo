@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LPScene.unity
+    path: Assets/Scenes/HumanXRDemoScene.unity
     guid: 2f38c1a87c002fb4eae672994969d579
   m_configObjects:
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: ce0c04ec738d4f2409f7ce5e33b83b3b, type: 2}

@@ -21,7 +21,7 @@ public class SerialCommsAdaFruit : MonoBehaviour
     GameObject index, thumb;
 
     //Set the port and the baud rate to 9600
-    public string portName = "COM3";
+    public string portName = "COM5";
     public int baudRate = 115200;
     //public int baudRate = 9600;
     SerialPort stream;
@@ -75,7 +75,7 @@ public class SerialCommsAdaFruit : MonoBehaviour
         }
         writeSerial("0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00\n");
         //stream.Close();
-        // readSerial();
+        readSerial();
     }
 
     // Update is called once per frame
@@ -116,8 +116,8 @@ public class SerialCommsAdaFruit : MonoBehaviour
                 //message3 = message3 + thumbForce.x.ToString("0.00") + " " + thumbForce.y.ToString("0.00") + " " + thumbForce.z.ToString("0.00") + " " + thumbMagF.ToString("0.00") + " " + thumbShear.ToString("0.00") + " " + thumbTorque.ToString("0.000") + "\n";
                 */
 
-                string message = deviceMessage0+"\n";// + " " + deviceMessage1 + "\n";
-                //string message = deviceMessage0 + " " + deviceMessage1 + "\n";
+                //string message = deviceMessage0+"\n";// + " " + deviceMessage1 + "\n";
+                string message = deviceMessage0 + " " + deviceMessage1 + "\n";
 
 
 
@@ -125,22 +125,22 @@ public class SerialCommsAdaFruit : MonoBehaviour
                 // If so dont sent the new message to avoid semaphore issue
                 //if (oldMessage != message)
                 //{
-                    // Open stream
-                    //stream.Open();
-                    //stream.DiscardInBuffer();
-                    //stream.DiscardOutBuffer();
-                    //Write to Arudino via serial
+                // Open stream
+                //stream.Open();
+                //stream.DiscardInBuffer();
+                //stream.DiscardOutBuffer();
+                //Write to Arudino via serial
 
-                    writeSerial(message);
+                writeSerial(message);
                     oldMessage = message;
                     lastTime = currentTime;
 
-                    // Close stream to avoid semaphore error --- check later on Jasmin's PCs
-                    //stream.Close();
+                // Close stream to avoid semaphore error --- check later on Jasmin's PCs
+                //stream.Close();
                 //}
 
                 // Read the serial data that came from arduino
-                // readSerial();
+                readSerial();
 
                 //Debug.Log("Back from MC");
                 // lastTime = currentTime;
@@ -185,7 +185,7 @@ public class SerialCommsAdaFruit : MonoBehaviour
                 stream.DiscardInBuffer(); // Optional: Clear the input buffer
                 string mcMessage = stream.ReadLine();
                 Debug.Log("mcMessage: " + mcMessage);
-                mcDataVals = mcMessage.Split(',');
+                mcDataVals = mcMessage.Split(' ');
             }
             catch (System.TimeoutException)
             {
