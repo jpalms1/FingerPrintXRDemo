@@ -101,9 +101,7 @@ public class FingerProxy : MonoBehaviour
         */
         player = GameObject.Find("Player");
 
-
         hapticLabel = "Haptic Anatomy";
-
     }
 
     // Update is called once per frame
