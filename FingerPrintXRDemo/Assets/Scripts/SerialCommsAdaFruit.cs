@@ -21,7 +21,7 @@ public class SerialCommsAdaFruit : MonoBehaviour
     GameObject index, thumb;
 
     //Set the port and the baud rate to 9600
-    public string portName = "COM5";
+    public string portName = "COM4";
     public int baudRate = 115200;
     //public int baudRate = 9600;
     SerialPort stream;
@@ -55,8 +55,8 @@ public class SerialCommsAdaFruit : MonoBehaviour
         //Define and open serial port       
         stream = new SerialPort(portName, baudRate);
         //Serial Port Read and Write Timeouts
-        stream.ReadTimeout = 100;// 5;
-        stream.WriteTimeout = 100;// 10;
+        stream.ReadTimeout = 10;//5;
+        stream.WriteTimeout = 10;
 
         try
         {
@@ -73,7 +73,7 @@ public class SerialCommsAdaFruit : MonoBehaviour
         {
             Debug.LogError("Failed to open serial port: " + e.Message);
         }
-        writeSerial("0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00\n");
+        writeSerial("0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.000\n");
         //stream.Close();
         readSerial();
     }
@@ -93,13 +93,14 @@ public class SerialCommsAdaFruit : MonoBehaviour
                 Vector3 thumbForce = thumb.GetComponent<FingerProxy>().force;
                 float indexTorque = index.GetComponent<FingerProxy>().torqueMag;
                 float thumbTorque = thumb.GetComponent<FingerProxy>().torqueMag;
-                indexForce.y *= -1;  // Changed direction to consider  Unity's LHC 
-                float indexMagF = Mathf.Sqrt(indexForce.sqrMagnitude);
+                float indexMagF = index.GetComponent<FingerProxy>().forceMag;
+                float thumbMagF = thumb.GetComponent<FingerProxy>().forceMag;
+
                 float indexShear = Mathf.Sqrt(indexForce.x * indexForce.x + indexForce.y * indexForce.y);
+                float thumbShear = Mathf.Sqrt(thumbForce.x * thumbForce.x + thumbForce.y * thumbForce.y);
+                indexForce.y *= -1;  // Changed direction to consider  Unity's LHC 
                 thumbForce.x *= -1; // Changed direction to consider  Unity's LHC 
                 thumbForce.y *= -1; // Changed direction to consider  Unity's LHC 
-                float thumbMagF = Mathf.Sqrt(thumbForce.sqrMagnitude);
-                float thumbShear = Mathf.Sqrt(thumbForce.x * thumbForce.x + thumbForce.y * thumbForce.y);
 
                 // Message for Hoxels only
                 string deviceMessage0 = indexForce.x.ToString("0.00") + " " + indexForce.y.ToString("0.00") + " " + indexForce.z.ToString("0.00") + " " + indexMagF.ToString("0.00") + " " + indexShear.ToString("0.00") + " " + "0.000";
@@ -123,22 +124,23 @@ public class SerialCommsAdaFruit : MonoBehaviour
 
                 // Check to see if the old message is the same
                 // If so dont sent the new message to avoid semaphore issue
-                //if (oldMessage != message)
-                //{
-                // Open stream
-                //stream.Open();
-                //stream.DiscardInBuffer();
-                //stream.DiscardOutBuffer();
-                //Write to Arudino via serial
+                if (oldMessage != message)
+                {
+                    // Open stream
+                    //stream.Open();
+                    //stream.DiscardInBuffer();
+                    //stream.DiscardOutBuffer();
+                    //Write to Arudino via serial
 
-                writeSerial(message);
+                    //writeSerial(message);
                     oldMessage = message;
                     lastTime = currentTime;
 
-                // Close stream to avoid semaphore error --- check later on Jasmin's PCs
-                //stream.Close();
-                //}
+                    // Close stream to avoid semaphore error --- check later on Jasmin's PCs
+                    //stream.Close();
+                }
 
+                writeSerial(message);
                 // Read the serial data that came from arduino
                 readSerial();
 

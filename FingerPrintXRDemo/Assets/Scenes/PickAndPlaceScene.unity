@@ -2270,7 +2270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6faca1e2b5f703645b8279e489e5f166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portName: COM5
+  portName: COM4
   baudRate: 115200
 --- !u!1001 &1840894870
 PrefabInstance:
