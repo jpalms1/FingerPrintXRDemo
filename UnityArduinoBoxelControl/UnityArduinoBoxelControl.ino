@@ -211,6 +211,8 @@ void z1(int d)
   analogWrite(pwmPump8, d);
 }
 
+const int led = LED_BUILTIN;
+
 void setup() 
 {
   pinMode(enableLS, OUTPUT);
@@ -230,6 +232,17 @@ void setup()
 
   exhaustHoxel0();
   exhaustHoxel1();
+
+  // Flash Twice  
+  pinMode(led, OUTPUT);
+  digitalWrite(led, HIGH);
+  delay(1000);
+  digitalWrite(led, LOW);
+  delay(1000);
+  digitalWrite(led, HIGH);
+  delay(1000);
+  digitalWrite(led, LOW);
+  delay(1000);
 }
 
 float X0, Y0, Z0, magF0, shear0, M0, X1, Y1, Z1, magF1, shear1, M1;
@@ -241,9 +254,9 @@ void loop()
   {
     //Serial.println("READING");
     String data = Serial.readStringUntil('\n');
-    Serial.println((String)"DATA: "+ data);
     sscanf(data.c_str(), "%f %f %f %f %f %f %f %f %f %f %f %f", &X0, &Y0, &Z0, &magF0, &shear0, &M0, &X1, &Y1, &Z1, &magF1, &shear1, &M1);
 
+    Serial.println((String)"DATA: "+ data + " magF0: " + magF0);
     moveHoxel0(X0, Y0, Z0, magF0, shear0);
     //moveHoxel1(X1, Y1, Z1, magF1, shear1);
     delay(5);

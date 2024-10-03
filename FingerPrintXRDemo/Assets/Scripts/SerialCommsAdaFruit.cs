@@ -21,7 +21,7 @@ public class SerialCommsAdaFruit : MonoBehaviour
     GameObject index, thumb;
 
     //Set the port and the baud rate to 9600
-    public string portName = "COM4";
+    public string portName = "COM8";
     public int baudRate = 115200;
     //public int baudRate = 9600;
     SerialPort stream;
@@ -55,8 +55,8 @@ public class SerialCommsAdaFruit : MonoBehaviour
         //Define and open serial port       
         stream = new SerialPort(portName, baudRate);
         //Serial Port Read and Write Timeouts
-        stream.ReadTimeout = 10;//5;
-        stream.WriteTimeout = 10;
+        stream.ReadTimeout = 200;//5;
+        stream.WriteTimeout = 200;
 
         try
         {

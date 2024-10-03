@@ -44,12 +44,12 @@ void moveHoxel0(float X0, float Y0, float Z0, float magF0, float shear0)
 {
   if (magF0 <= minForce) 
   {
-    Serial.println((String)"too low " + magF0);
+    //Serial.println((String)"too low " + magF0);
     exhaustHoxel0();
   } 
   else 
   {
-    Serial.println((String)"tryiong " + magF0);
+    //Serial.println((String)"tryiong " + magF0);
     z0(duty2bits(kZ * getPumpSpeed(Z0)));
     // if (abs(Z0) >= scale * shear0)  // Normal force only
     // {
