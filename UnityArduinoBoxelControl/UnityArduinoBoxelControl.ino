@@ -213,36 +213,30 @@ void z1(int d)
 
 const int led = LED_BUILTIN;
 
+void flashLED(int numFlashes)
+{
+  pinMode(led, OUTPUT);
+  int flashTime = 200;
+  for (int i = 0; i <= numFlashes; i++)
+  {
+    digitalWrite(led, HIGH);
+    delay(flashTime);
+    digitalWrite(led, LOW);
+    delay(flashTime);
+  }
+}
 void setup() 
 {
   pinMode(enableLS, OUTPUT);
   digitalWrite(enableLS, HIGH);
-
-  // // Set the pump frequency
-  // analogWriteFrequency(pwmPump1, 8000);
-  // analogWriteFrequency(pwmPump2, 8000);
-  // analogWriteFrequency(pwmPump3, 8000);
-  // analogWriteFrequency(pwmPump4, 8000);
-  // analogWriteFrequency(pwmPump5, 8000);
-  // analogWriteFrequency(pwmPump6, 8000);
-  // analogWriteFrequency(pwmPump7, 8000);
-  // analogWriteFrequency(pwmPump8, 8000);
 
   Serial.begin(115200);
 
   exhaustHoxel0();
   exhaustHoxel1();
 
-  // Flash Twice  
-  pinMode(led, OUTPUT);
-  digitalWrite(led, HIGH);
-  delay(1000);
-  digitalWrite(led, LOW);
-  delay(1000);
-  digitalWrite(led, HIGH);
-  delay(1000);
-  digitalWrite(led, LOW);
-  delay(1000);
+  // Flash five times when code is uploaded    
+  flashLED(5);
 }
 
 float X0, Y0, Z0, magF0, shear0, M0, X1, Y1, Z1, magF1, shear1, M1;
